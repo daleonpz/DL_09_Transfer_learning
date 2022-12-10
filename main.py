@@ -18,13 +18,13 @@ from tqdm import tqdm
 from utils import *
 
 # Specify dataset
-data_flag   = 'pathmnist'
-device      = 'cuda' if torch.cuda.is_available() else 'cpu'
+DATA_FLAG   = 'pathmnist'
+DEVICE      = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-download = True
+DOWNLOAD_FLAG = True
 
 batch_size = 256
-info = INFO[data_flag]
+info = INFO[DATA_FLAG]
 
 n_channels = info['n_channels']
 n_classes = len(info['label'])
@@ -34,17 +34,25 @@ DataClass = getattr(medmnist, info['python_class'])
 
 os.makedirs("./figs/", exist_ok=True)
 
+class MyDataLoader:
+    def __init__(self):
+        # Moves the range [0,1] to [-1,1]
+        self.mean    = torch.tensor([0.5], dtype=torch.float32)
+        self.std     = torch.tensor([0.5], dtype=torch.float32)
 
-# Moves the range [0,1] to [-1,1]
-mean    = torch.tensor([0.5], dtype=torch.float32)
-std     = torch.tensor([0.5], dtype=torch.float32)
+        self.plain_transform = T.Compose([T.ToTensor(), T.Normalize(list(mean), list(std))])
 
-plain_transform = T.Compose([T.ToTensor(), T.Normalize(list(mean), list(std))])
+    def load_datasets(self):
+        train_ds_plain  = DataClass(split='train',  transform=self.plain_transform, download=DOWNLOAD_FLAG)
+        val_ds          = DataClass(split='val',    transform=self.plain_transform, download=DOWNLOAD_FLAG)
+        test_ds         = DataClass(split='test',   transform=self.plain_transform, download=DOWNLOAD_FLAG)
 
-# load the data
-train_ds_plain  = DataClass(split='train',  transform=plain_transform, download=download)
-val_ds          = DataClass(split='val',    transform=plain_transform, download=download)
-test_ds         = DataClass(split='test',   transform=plain_transform, download=download)
+        return train_ds_plain, val_ds, test_ds
+
+
+
+dataloader = MyDataLoader()
+train_ds_plain, val_ds, test_ds = dataloader.load_datasets()
 
 train_loader_plain1 = data.DataLoader(dataset=train_ds_plain, batch_size=batch_size, shuffle=True, drop_last=True)
 
@@ -53,4 +61,4 @@ img1, lab = next(iter(train_loader_plain1))
 # show the images
 plt.figure(figsize = (50,20))
 for i in range(10):  
-        imshow(train_ds_plain[i][0], i, mean, std)
+        imshow(train_ds_plain[i][0], i, dataloader.mean, dataloader.std)
