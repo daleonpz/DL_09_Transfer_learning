@@ -74,13 +74,13 @@ class KnnConvnet:
         Returns: train accuracy, or train and test acc
         """
         ### START CODE HERE ### (approx. 2 lines)
-        knnClassifier.fit(features, labels, k)
+        self.knnClassifier.fit(features, labels, k)
         ### END CODE HERE ###
 
     def predict(self, features, labels):
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
-        prediction = knnClassifier.predict(self.embeds_test)
+        prediction = self.knnClassifier.predict(self.embeds_test)
         acc = sklearn.metrics.pairwise.cosine_similarity(prediction, self.lab_test)
         ### END CODE HERE ###
         return acc
