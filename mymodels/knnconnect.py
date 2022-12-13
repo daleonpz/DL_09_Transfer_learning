@@ -1,9 +1,10 @@
 import numpy as np
 import torch
-import torch.utils.data 
+import torch.utils.data
+import torchvision
+import sklearn.metrics
 from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
 from torch import nn
 
 
@@ -18,7 +19,6 @@ class KnnConvnet:
         self.lab_test = None
         self.embeds_test = None
         self.distance = distance
-
         self.knnClassifier = KNeighborsClassifier()
 
     def get_features(self, mode="train"):
@@ -81,7 +81,7 @@ class KnnConvnet:
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
         prediction = knnClassifier.predict(self.embeds_test)
-        acc = accuracy_score(prediction, self.lab_test)
+        acc = sklearn.metrics.pairwise.cosine_similarity(prediction, self.lab_test)
         ### END CODE HERE ###
         return acc
 
