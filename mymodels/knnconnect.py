@@ -43,11 +43,10 @@ class KnnConvnet:
         features = []
         label_lst = []
         ### START CODE HERE ### (approx. 4 lines)
-        for i in iter(loader):
-            features_loader, labels = next(i)
-            print(f"Feature batch shape: {features.size()}")
+        for inputs, labels in loader:
+            print(f"Feature batch shape: {inputs.size()}")
             print(f"Labels batch shape: {labels.size()}")
-            features.append(features_loader)
+            features.append(inputs)
             labels_lst.append(labels)
         ### END CODE HERE ###
         h_total = torch.cat(features)
