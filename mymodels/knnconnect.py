@@ -76,7 +76,7 @@ class KnnConvnet:
         """
         ### START CODE HERE ### (approx. 2 lines)
         self.knnClassifier = KNeighborsClassifier(n_neighbors=k, metric=self.distance)
-        self.knnClassifier.fit(features, labels)
+        self.knnClassifier.fit(features.to('cpu'), labels)
         ### END CODE HERE ###
 
     def predict(self, features, labels):
