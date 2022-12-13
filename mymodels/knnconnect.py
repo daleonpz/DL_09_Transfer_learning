@@ -57,8 +57,7 @@ class KnnConvnet:
         label_list = []
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
-            print(inputs.size())
-            features = self.model(inputs)
+            features = self.model(inputs.to(self.device)) # to(device) needed so the model and input are on the same 'device'
             feature_list.append(features)
             label_list.append(labels)
         ### END CODE HERE ###
