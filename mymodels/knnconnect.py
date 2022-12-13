@@ -106,6 +106,8 @@ class KnnConvnet:
 
 
 def test_knn(train_ds_plain, val_ds):
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+
     d1 = torch.utils.data.Subset(train_ds_plain, list(range(300)))
     d2 = torch.utils.data.Subset(val_ds, list(range(100)))
 
