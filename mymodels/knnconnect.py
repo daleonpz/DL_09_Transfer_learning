@@ -44,8 +44,6 @@ class KnnConvnet:
         label_lst = []
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
-            print(f"Feature batch shape: {inputs.size()}")
-            print(f"Labels batch shape: {labels.size()}")
             features.append(inputs)
             labels_lst.append(labels)
         ### END CODE HERE ###
