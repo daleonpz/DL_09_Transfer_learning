@@ -76,9 +76,9 @@ class KnnConvnet:
         """
         ### START CODE HERE ### (approx. 2 lines)
         print(features.size())
-        print(labels.size())
+        print(len(labels[0]))
         print(k)
-        self.knnClassifier.fit(features, labels, k)
+        self.knnClassifier.fit(features, labels[0], k)
         ### END CODE HERE ###
 
     def predict(self, features, labels):
