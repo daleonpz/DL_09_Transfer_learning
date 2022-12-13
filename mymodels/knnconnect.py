@@ -77,7 +77,8 @@ class KnnConvnet:
         """
         ### START CODE HERE ### (approx. 2 lines)
         self.knnClassifier = KNeighborsClassifier(n_neighbors=k, metric=self.distance)
-        self.knnClassifier.fit(features.to('cpu'), labels)
+        #  DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel()
+        self.knnClassifier.fit(features.to('cpu'), labels.ravel()) # ravel to flatten labels
         ### END CODE HERE ###
 
     def predict(self, features, labels):
