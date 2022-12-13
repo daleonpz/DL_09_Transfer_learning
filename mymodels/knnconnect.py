@@ -97,14 +97,18 @@ class KnnConvnet:
 
         self.fit(self.embeds_train, self.lab_train, k)
         print('----------before prediction')
-        print(self.embeds_train)
-        print(self.lab_train)
+#         print(self.embeds_train)
+#         print(self.lab_train)
         train_acc = self.predict(self.embeds_train, self.lab_train)
-
+        print('-------after train prediction')
         if test_loader is not None:
             if self.embeds_test is None:
                 embeds_test, lab_test = self.extract_features(test_loader)
                 self.set_features(embeds_test, lab_test, mode="test")
+
+            print('-------before test prediction')
+            print(self.embeds_test.size())
+            print(self.lab_test.size())
 
             test_acc = self.predict(self.embeds_test, self.lab_test)
             return train_acc, test_acc
