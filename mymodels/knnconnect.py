@@ -25,7 +25,6 @@ class KnnConvnet:
         assert self.embeds_train is not None, "Training embedding are not computed yet."
         assert self.embeds_test is not None, "Test embedding are not computed yet."
         ### START CODE HERE ### (approx. 4 lines)
-
         ### END CODE HERE ###
 
     def set_features(self, embeds, labels, mode="train"):
@@ -44,7 +43,12 @@ class KnnConvnet:
         features = []
         label_lst = []
         ### START CODE HERE ### (approx. 4 lines)
-
+        for i in iter(loader):
+            features_loader, labels = next(i)
+            print(f"Feature batch shape: {features.size()}")
+            print(f"Labels batch shape: {labels.size()}")
+            features.append(features_loader)
+            labels_lst.append(labels)
         ### END CODE HERE ###
         h_total = torch.cat(features)
         label_total = torch.cat(label_lst)
@@ -90,19 +94,20 @@ class KnnConvnet:
         return train_acc
 
 
-def test_knn():
+def test_knn(train_ds_plain, val_ds):
     d1 = torch.utils.data.Subset(train_ds_plain, list(range(300)))
     d2 = torch.utils.data.Subset(val_ds, list(range(100)))
+
     train_loader = data.DataLoader(
         dataset=d1, batch_size=32, shuffle=False, drop_last=False
     )
     test_loader = data.DataLoader(
         dataset=d2, batch_size=32, shuffle=False, drop_last=False
     )
+
     model = torchvision.models.resnet18(pretrained=True)
     knn_cls = KnnConvnet(model, device=device)
     train_acc, test_acc = knn_cls.execute(train_loader, test_loader, k=1)
     print(f"train acc: {train_acc:.2f}%, test acc: {test_acc:.2f}%")
 
 
-test_knn()
