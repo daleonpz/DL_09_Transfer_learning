@@ -55,6 +55,7 @@ class KnnConvnet:
         """
         feature_list = []
         label_list = []
+        print('---Extracted features')
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
             features = self.model(inputs.to(self.device)) # to(device) needed so the model and input are on the same 'device'
@@ -94,6 +95,9 @@ class KnnConvnet:
             self.set_features(embeds_train, lab_train, mode="train")
 
         self.fit(self.embeds_train, self.lab_train, k)
+        print('----------before prediction')
+        print(self.embeds_train)
+        print(self.lab_train)
         train_acc = self.predict(self.embeds_train, self.lab_train)
 
         if test_loader is not None:
