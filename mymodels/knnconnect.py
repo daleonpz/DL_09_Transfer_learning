@@ -109,10 +109,10 @@ def test_knn(train_ds_plain, val_ds):
     d1 = torch.utils.data.Subset(train_ds_plain, list(range(300)))
     d2 = torch.utils.data.Subset(val_ds, list(range(100)))
 
-    train_loader = data.DataLoader(
+    train_loader = torch.utils.data.DataLoader(
         dataset=d1, batch_size=32, shuffle=False, drop_last=False
     )
-    test_loader = data.DataLoader(
+    test_loader = torch.utils.data.DataLoader(
         dataset=d2, batch_size=32, shuffle=False, drop_last=False
     )
 
