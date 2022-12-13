@@ -19,7 +19,7 @@ DOWNLOAD_FLAG = True
 os.makedirs("./figs/", exist_ok=True)
 
 
-class DataLoader:
+class DataSet:
     def __init__(self):
         # Moves the range [0,1] to [-1,1]
         self.mean = torch.tensor([0.5], dtype=torch.float32)
