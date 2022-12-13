@@ -3,10 +3,10 @@ import os
 import torch
 
 from medmnist import INFO
+from torchvision import transforms as T
 
 # Specify dataset
-# DEVICE      = 'cuda' if torch.cuda.is_available() else 'cpu'
-
+DEVICE      = 'cuda' if torch.cuda.is_available() else 'cpu'
 DOWNLOAD_FLAG = True
 
 # batch_size = 256
@@ -18,7 +18,7 @@ DOWNLOAD_FLAG = True
 
 os.makedirs("./figs/", exist_ok=True)
 
-class MyDataLoader:
+class DataLoader:
     def __init__(self, device):
         # Moves the range [0,1] to [-1,1]
         self.mean    = torch.tensor([0.5], dtype=torch.float32)
