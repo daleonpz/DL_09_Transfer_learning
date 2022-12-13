@@ -25,6 +25,10 @@ class KnnConvnet:
         assert self.embeds_train is not None, "Training embedding are not computed yet."
         assert self.embeds_test is not None, "Test embedding are not computed yet."
         ### START CODE HERE ### (approx. 4 lines)
+        if mode =='train':
+            return self.embeds_train
+        if mode == 'test':
+            return self.embeds_test
         ### END CODE HERE ###
 
     def set_features(self, embeds, labels, mode="train"):
