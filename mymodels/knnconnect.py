@@ -75,7 +75,7 @@ class KnnConvnet:
         Returns: train accuracy, or train and test acc
         """
         ### START CODE HERE ### (approx. 2 lines)
-        self.knnClassifier = KNeighborsClassifier(n_neighbors=k, metric=distance)
+        self.knnClassifier = KNeighborsClassifier(n_neighbors=k, metric=self.distance)
         self.knnClassifier.fit(features, labels)
         ### END CODE HERE ###
 
