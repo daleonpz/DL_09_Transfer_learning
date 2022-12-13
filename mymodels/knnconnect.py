@@ -57,8 +57,9 @@ class KnnConvnet:
         label_list = []
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
+            print(inputs.size())
             features = self.model(inputs)
-            feature_list.append(feature)
+            feature_list.append(features)
             label_list.append(labels)
         ### END CODE HERE ###
         h_total = torch.cat(feature_list)
