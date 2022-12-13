@@ -1,8 +1,9 @@
 import numpy as np
 import torch
+import torch.utils.data 
 from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics    import accuracy_score
+from sklearn.metrics import accuracy_score
 from torch import nn
 
 
@@ -28,21 +29,21 @@ class KnnConvnet:
         assert self.embeds_train is not None, "Training embedding are not computed yet."
         assert self.embeds_test is not None, "Test embedding are not computed yet."
         ### START CODE HERE ### (approx. 4 lines)
-        if mode =='train':
+        if mode == "train":
             return self.embeds_train
-        if mode == 'test':
+        if mode == "test":
             return self.embeds_test
         ### END CODE HERE ###
 
     def set_features(self, embeds, labels, mode="train"):
         """Sets the train or test embeddings and their labels."""
         ### START CODE HERE ### (approx. 6 lines)
-        if mode == 'train':
-            self.embeds_train   = embeds
-            self.lab_train      = labels
-        if mode == 'test':
-            self.embeds_test    = embeds
-            self.lab_test       = labels
+        if mode == "train":
+            self.embeds_train = embeds
+            self.lab_train = labels
+        if mode == "test":
+            self.embeds_test = embeds
+            self.lab_test = labels
         ### END CODE HERE ###
 
     @torch.no_grad()
@@ -119,5 +120,3 @@ def test_knn(train_ds_plain, val_ds):
     knn_cls = KnnConvnet(model, device=device)
     train_acc, test_acc = knn_cls.execute(train_loader, test_loader, k=1)
     print(f"train acc: {train_acc:.2f}%, test acc: {test_acc:.2f}%")
-
-
