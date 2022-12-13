@@ -75,6 +75,9 @@ class KnnConvnet:
         Returns: train accuracy, or train and test acc
         """
         ### START CODE HERE ### (approx. 2 lines)
+        print(features.size())
+        print(labels.size())
+        print(k)
         self.knnClassifier.fit(features, labels, k)
         ### END CODE HERE ###
 
