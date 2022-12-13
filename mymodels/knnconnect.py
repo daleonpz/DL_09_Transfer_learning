@@ -19,7 +19,7 @@ class KnnConvnet:
         self.lab_test = None
         self.embeds_test = None
         self.distance = distance
-        self.knnClassifier = KNeighborsClassifier()
+        self.knnClassifier = None
 
     def get_features(self, mode="train"):
         """Returns the embeddings of the train or test set.
@@ -75,17 +75,15 @@ class KnnConvnet:
         Returns: train accuracy, or train and test acc
         """
         ### START CODE HERE ### (approx. 2 lines)
-        print(features.size())
-        print(len(labels[0]))
-        print(k)
-        self.knnClassifier.fit(features, labels[0], k)
+        self.knnClassifier = KNeighborsClassifier(n_neighbors=k, metric=distance)
+        self.knnClassifier.fit(features, labels)
         ### END CODE HERE ###
 
     def predict(self, features, labels):
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
         prediction = self.knnClassifier.predict(self.embeds_test)
-        acc = sklearn.metrics.pairwise.cosine_similarity(prediction, self.lab_test)
+        acc =  torch.norm(prediction - self.lab_test)
         ### END CODE HERE ###
         return acc
 
