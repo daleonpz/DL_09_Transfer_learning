@@ -57,7 +57,7 @@ class KnnConvnet:
         label_list = []
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
-            features = model(inputs)
+            features = self.model(inputs)
             feature_list.append(feature)
             label_list.append(labels)
         ### END CODE HERE ###
