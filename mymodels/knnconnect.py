@@ -2,6 +2,7 @@ import numpy as np
 import torch
 from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics    import accuracy_score
 from torch import nn
 
 
@@ -16,6 +17,8 @@ class KnnConvnet:
         self.lab_test = None
         self.embeds_test = None
         self.distance = distance
+
+        self.knnClassifier = KNeighborsClassifier()
 
     def get_features(self, mode="train"):
         """Returns the embeddings of the train or test set.
@@ -70,13 +73,14 @@ class KnnConvnet:
         Returns: train accuracy, or train and test acc
         """
         ### START CODE HERE ### (approx. 2 lines)
-
+        knnClassifier.fit(features, labels, k)
         ### END CODE HERE ###
 
     def predict(self, features, labels):
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
-
+        prediction = knnClassifier.predict(self.embeds_test)
+        acc = accuracy_score(prediction, self.lab_test)
         ### END CODE HERE ###
         return acc
 
