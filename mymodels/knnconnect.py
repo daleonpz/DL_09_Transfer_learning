@@ -30,7 +30,12 @@ class KnnConvnet:
     def set_features(self, embeds, labels, mode="train"):
         """Sets the train or test embeddings and their labels."""
         ### START CODE HERE ### (approx. 6 lines)
-
+        if mode == 'train':
+            self.embeds_train   = embeds
+            self.lab_train      = labels
+        if mode == 'test':
+            self.embeds_test    = embeds
+            self.lab_test       = labels
         ### END CODE HERE ###
 
     @torch.no_grad()
