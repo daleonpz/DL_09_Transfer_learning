@@ -53,15 +53,16 @@ class KnnConvnet:
             loader: train or test loader
         Returns: 3 tensors of all: features, labels
         """
-        features = []
-        label_lst = []
+        feature_list = []
+        label_list = []
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
-            features.append(inputs)
-            label_lst.append(labels)
+            features = model(inputs)
+            feature_list.append(feature)
+            label_list.append(labels)
         ### END CODE HERE ###
-        h_total = torch.cat(features)
-        label_total = torch.cat(label_lst)
+        h_total = torch.cat(feature_list)
+        label_total = torch.cat(label_list)
         return h_total, label_total
 
     @torch.no_grad()
