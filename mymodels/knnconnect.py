@@ -105,8 +105,6 @@ class KnnConvnet:
 
         self.fit(self.embeds_train, self.lab_train, k)
         print("----------before prediction")
-        #         print(self.embeds_train)
-        #         print(self.lab_train)
         train_acc = self.predict(self.embeds_train, self.lab_train)
         print("-------after train prediction")
         if test_loader is not None:
@@ -119,6 +117,7 @@ class KnnConvnet:
             print(self.lab_test.size())
 
             test_acc = self.predict(self.embeds_test, self.lab_test)
+            print('---after test prediction')
             return train_acc, test_acc
 
         return train_acc
@@ -140,4 +139,5 @@ def test_knn(train_ds_plain, val_ds):
     model = torchvision.models.resnet18(pretrained=True)
     knn_cls = KnnConvnet(model, device=device)
     train_acc, test_acc = knn_cls.execute(train_loader, test_loader, k=1)
-    print(f"train acc: {train_acc:.2f}%, test acc: {test_acc:.2f}%")
+    return train_acc, test_acc
+#     print(f"train acc: {train_acc:.2f}%, test acc: {test_acc:.2f}%")
