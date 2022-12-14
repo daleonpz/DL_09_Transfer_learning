@@ -58,9 +58,8 @@ class KnnConvnet:
         print("---Extracted features")
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
-            features = self.model(
-                inputs.to(self.device)
-            )  # to(device) needed so the model and input are on the same 'device'
+            # to(device) needed so the model and input are on the same 'device'
+            features = self.model(inputs.to(self.device))  
             feature_list.append(features)
             label_list.append(labels)
         ### END CODE HERE ###
@@ -82,9 +81,7 @@ class KnnConvnet:
         # DataConversionWarning: A column-vector y was passed when a 1d array was expected. 
         # Please change the shape of y to (n_samples,), for example using ravel()
         # ravel will convert that array shape to (n, )
-        self.knnClassifier.fit(
-            features.to("cpu"), labels.ravel()
-        )  # ravel to flatten labels
+        self.knnClassifier.fit( features.to("cpu"), labels.ravel())  
         ### END CODE HERE ###
 
     def predict(self, features, labels):
@@ -92,9 +89,9 @@ class KnnConvnet:
         ### START CODE HERE ### (approx. 2 lines)
         prediction = self.knnClassifier.predict(features.to('cpu'))
 #         acc = torch.norm( torch.tensor(prediction) - labels ) # tensor - tensor
-        acc = cross_val_score( self.knnClassifier, prediction.reshape(-1,1),  labels.ravel(), 
+#         acc = cross_val_score( self.knnClassifier, prediction.reshape(-1,1),  labels.ravel(), 
+        acc = cross_val_score( self.knnClassifier, features.to('cpu'),  labels.ravel(), 
                             scoring='accuracy')
-#         print(f'ACC = {acc}')
         ### END CODE HERE ###
         return acc
 
@@ -105,20 +102,15 @@ class KnnConvnet:
             self.set_features(embeds_train, lab_train, mode="train")
 
         self.fit(self.embeds_train, self.lab_train, k)
-        print("----------before prediction")
         train_acc = self.predict(self.embeds_train, self.lab_train)
-        print("-------after train prediction")
+
+
         if test_loader is not None:
             if self.embeds_test is None:
                 embeds_test, lab_test = self.extract_features(test_loader)
                 self.set_features(embeds_test, lab_test, mode="test")
 
-            print("-------before test prediction")
-            print(self.embeds_test.size())
-            print(self.lab_test.size())
-
             test_acc = self.predict(self.embeds_test, self.lab_test)
-            print('---after test prediction')
             return train_acc, test_acc
 
         return train_acc
