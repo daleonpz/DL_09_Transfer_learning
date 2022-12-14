@@ -94,6 +94,7 @@ class KnnConvnet:
 #         acc = torch.norm( torch.tensor(prediction) - labels ) # tensor - tensor
         acc = cross_val_score( self.knnClassifier, prediction,  labels.ravel(), 
                             scoring='accuracy')
+        print(f'ACC = {acc}')
         ### END CODE HERE ###
         return acc
 
