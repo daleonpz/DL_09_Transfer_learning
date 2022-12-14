@@ -90,10 +90,9 @@ class KnnConvnet:
     def predict(self, features, labels):
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
-        print(type(features))
         prediction = self.knnClassifier.predict(features.to('cpu'))
 #         acc = torch.norm( torch.tensor(prediction) - labels ) # tensor - tensor
-        acc = cross_val_score( self.fit, prediction,  labels.ravel(), 
+        acc = cross_val_score( self.model, prediction,  labels.ravel(), 
                             scoring='accuracy')
         ### END CODE HERE ###
         return acc
@@ -102,7 +101,6 @@ class KnnConvnet:
     def execute(self, train_loader, test_loader=None, k=10):
         if self.embeds_train is None:
             embeds_train, lab_train = self.extract_features(train_loader)
-            print(f'train: {type(embeds_train)}')
             self.set_features(embeds_train, lab_train, mode="train")
 
         self.fit(self.embeds_train, self.lab_train, k)
