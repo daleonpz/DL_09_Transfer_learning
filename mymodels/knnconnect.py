@@ -129,6 +129,6 @@ def test_knn(train_ds_plain, val_ds):
 
     model = torchvision.models.resnet18(pretrained=True)
     knn_cls = KnnConvnet(model, device=device)
-    train_acc, test_acc = knn_cls.execute(train_loader, test_loader, k=1)
+    train_acc, test_acc = knn_cls.execute(train_loader, test_loader, k=10)
     print(f"train acc: {train_acc:.2f}%, test acc: {test_acc:.2f}%")
     return train_acc, test_acc
