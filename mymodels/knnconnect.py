@@ -55,10 +55,12 @@ class KnnConvnet:
         """
         feature_list = []
         label_list = []
-        print('---Extracted features')
+        print("---Extracted features")
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
-            features = self.model(inputs.to(self.device)) # to(device) needed so the model and input are on the same 'device'
+            features = self.model(
+                inputs.to(self.device)
+            )  # to(device) needed so the model and input are on the same 'device'
             feature_list.append(features)
             label_list.append(labels)
         ### END CODE HERE ###
@@ -77,15 +79,20 @@ class KnnConvnet:
         """
         ### START CODE HERE ### (approx. 2 lines)
         self.knnClassifier = KNeighborsClassifier(n_neighbors=k, metric=self.distance)
-        #  DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel()
-        self.knnClassifier.fit(features.to('cpu'), labels.ravel()) # ravel to flatten labels
+        # DataConversionWarning: A column-vector y was passed when a 1d array was expected. 
+        # Please change the shape of y to (n_samples,), for example using ravel()
+        # ravel will convert that array shape to (n, )
+        self.knnClassifier.fit(
+            features.to("cpu"), labels.ravel()
+        )  # ravel to flatten labels
         ### END CODE HERE ###
 
     def predict(self, features, labels):
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
-        prediction = self.knnClassifier.predict(self.embeds_test)
-        acc =  torch.norm(prediction - self.lab_test)
+        print(type(features))
+        prediction = self.knnClassifier.predict(features)
+        acc = torch.norm(prediction - labels)
         ### END CODE HERE ###
         return acc
 
@@ -93,20 +100,21 @@ class KnnConvnet:
     def execute(self, train_loader, test_loader=None, k=10):
         if self.embeds_train is None:
             embeds_train, lab_train = self.extract_features(train_loader)
+            print(f'train: {type(embeds_train)}')
             self.set_features(embeds_train, lab_train, mode="train")
 
         self.fit(self.embeds_train, self.lab_train, k)
-        print('----------before prediction')
-#         print(self.embeds_train)
-#         print(self.lab_train)
+        print("----------before prediction")
+        #         print(self.embeds_train)
+        #         print(self.lab_train)
         train_acc = self.predict(self.embeds_train, self.lab_train)
-        print('-------after train prediction')
+        print("-------after train prediction")
         if test_loader is not None:
             if self.embeds_test is None:
                 embeds_test, lab_test = self.extract_features(test_loader)
                 self.set_features(embeds_test, lab_test, mode="test")
 
-            print('-------before test prediction')
+            print("-------before test prediction")
             print(self.embeds_test.size())
             print(self.lab_test.size())
 
