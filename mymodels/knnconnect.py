@@ -55,7 +55,6 @@ class KnnConvnet:
         """
         feature_list = []
         label_list = []
-        print("---Extracted features")
         ### START CODE HERE ### (approx. 4 lines)
         for inputs, labels in loader:
             # to(device) needed so the model and input are on the same 'device'
@@ -91,10 +90,6 @@ class KnnConvnet:
         prediction = torch.tensor(prediction)
         acc = (prediction == torch.reshape(labels,(-1,) )).sum().item() / labels.shape[0] 
         acc *= 100
-#         acc = torch.norm( torch.tensor(prediction) - labels ) # tensor - tensor
-#         acc = cross_val_score( self.knnClassifier, prediction.reshape(-1,1),  labels.ravel(), 
-#         acc = cross_val_score( self.knnClassifier, features.to('cpu'),  labels.ravel(), 
-#                             scoring='accuracy')
         ### END CODE HERE ###
         return acc
 
