@@ -92,7 +92,9 @@ class KnnConvnet:
         ### START CODE HERE ### (approx. 2 lines)
         print(type(features))
         prediction = self.knnClassifier.predict(features.to('cpu'))
-        acc = torch.norm( torch.tensor(prediction) - labels ) # tensor - tensor
+#         acc = torch.norm( torch.tensor(prediction) - labels ) # tensor - tensor
+        acc = cross_val_score( self.fit, prediction,  labels.ravel(), 
+                            scoring='accuracy')
         ### END CODE HERE ###
         return acc
 
