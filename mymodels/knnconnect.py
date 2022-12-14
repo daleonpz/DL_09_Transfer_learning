@@ -90,10 +90,11 @@ class KnnConvnet:
         prediction = self.knnClassifier.predict(features.to('cpu'))
         print(f'prediction: {prediction} ')
         print(f'labels: {labels}')
+        acc = (torch.tensor(prediction) == labels).sum().item() / labels.shape[0] 
 #         acc = torch.norm( torch.tensor(prediction) - labels ) # tensor - tensor
 #         acc = cross_val_score( self.knnClassifier, prediction.reshape(-1,1),  labels.ravel(), 
-        acc = cross_val_score( self.knnClassifier, features.to('cpu'),  labels.ravel(), 
-                            scoring='accuracy')
+#         acc = cross_val_score( self.knnClassifier, features.to('cpu'),  labels.ravel(), 
+#                             scoring='accuracy')
         ### END CODE HERE ###
         return acc
 
