@@ -91,7 +91,7 @@ class KnnConvnet:
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
         print(type(features))
-        prediction = self.knnClassifier.predict(features)
+        prediction = self.knnClassifier.predict(features.to('cpu'))
         acc = torch.norm(prediction - labels)
         ### END CODE HERE ###
         return acc
