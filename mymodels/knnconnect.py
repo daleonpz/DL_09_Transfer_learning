@@ -92,7 +92,7 @@ class KnnConvnet:
         ### START CODE HERE ### (approx. 2 lines)
         print(type(features))
         prediction = self.knnClassifier.predict(features.to('cpu'))
-        acc = torch.norm(prediction - labels.to(cpu).numpy()) # np - np array
+        acc = torch.norm(prediction - labels.to('cpu').numpy()) # np - np array
         ### END CODE HERE ###
         return acc
 
