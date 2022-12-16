@@ -80,13 +80,13 @@ class KnnConvnet:
         # DataConversionWarning: A column-vector y was passed when a 1d array was expected. 
         # Please change the shape of y to (n_samples,), for example using ravel()
         # ravel will convert that array shape to (n, )
-        self.knnClassifier.fit( features.to("cpu"), labels.ravel())  
+        self.knnClassifier.fit( features.to(self.device), labels.ravel())  
         ### END CODE HERE ###
 
     def predict(self, features, labels):
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
-        prediction = self.knnClassifier.predict(features.to('cpu'))
+        prediction = self.knnClassifier.predict(features.to(self.device))
         prediction = torch.tensor(prediction)
         acc = (prediction == torch.reshape(labels,(-1,) )).sum().item() / labels.shape[0] 
         acc *= 100
