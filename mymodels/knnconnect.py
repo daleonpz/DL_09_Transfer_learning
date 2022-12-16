@@ -86,7 +86,7 @@ class KnnConvnet:
     def predict(self, features, labels):
         """Uses the features to compute the accuracy of the classifier (self.cls object)."""
         ### START CODE HERE ### (approx. 2 lines)
-        prediction = self.knnClassifier.predict(features.to(self.device))
+        prediction = self.knnClassifier.predict(features.cpu().numpy())
         prediction = torch.tensor(prediction)
         acc = (prediction == torch.reshape(labels,(-1,) )).sum().item() / labels.shape[0] 
         acc *= 100
