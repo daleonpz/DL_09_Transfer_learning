@@ -80,7 +80,7 @@ class KnnConvnet:
         # DataConversionWarning: A column-vector y was passed when a 1d array was expected. 
         # Please change the shape of y to (n_samples,), for example using ravel()
         # ravel will convert that array shape to (n, )
-        self.knnClassifier.fit( features.numpy(), labels.ravel())  
+        self.knnClassifier.fit( features.cpu().numpy(), labels.ravel())  
         ### END CODE HERE ###
 
     def predict(self, features, labels):
