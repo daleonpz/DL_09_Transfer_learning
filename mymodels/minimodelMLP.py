@@ -13,4 +13,4 @@ class MiniModel(torch.nn.Module):
         x = self.linear1(x)
         x = self.linear2(x)
         x = self.activation(x)
-        return
+        return x
