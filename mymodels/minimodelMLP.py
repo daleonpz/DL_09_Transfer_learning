@@ -6,7 +6,7 @@ class MiniModel(torch.nn.Module):
         super(MiniModel, self).__init__()
 
         self.linear1 = torch.nn.Linear(in_channel, 128)
-        self.linear2 = torch.nn.Linear(128, 8)
+        self.linear2 = torch.nn.Linear(128, 9)
         self.activation = torch.nn.ReLU(inplace=True)
 
     def forward(self, x):
